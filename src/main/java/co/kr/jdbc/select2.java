@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Scanner;
 
-public class select {
+public class select2 {
 
 	public static void main(String[] args) {
 		String id="root";
 		String pwd="6937544";
 		String url="jdbc:mysql://localhost:3306/study_db";
-		String sql="SELECT * FROM member";
+		Scanner sc=new Scanner(System.in);
+		String input=sc.next();
+		String sql="SELECT * FROM member  where id='"+input+"'";
 		Connection conn=null;
 		Statement stmt=null;
 		ResultSet rs=null;////////select에서만20210427
@@ -21,14 +24,17 @@ public class select {
 			System.out.println(conn+"접속완료");
 			stmt=conn.createStatement();
 			rs=stmt.executeQuery(sql);////////select에서만20210427이유는 여러정보를 가져오기 때문
-			while(rs.next())///행이있으면 true반환
-			{
+		if(rs.next()) {
 			String iid=rs.getString("id");
 			String ppwd=rs.getString("pwd");
 			String name=rs.getString("name");
 			String position=rs.getString("position");
 			System.out.println("아이디"+iid+ppwd+name+position);
 			}
+		else
+		{
+			System.out.println("존재하지 않는회원정보");
+		}
 		
 			}
 			catch(Exception e)
@@ -45,6 +51,7 @@ public class select {
 					// TODO: handle exception
 				}
 			}
+
 	}
 
 }
