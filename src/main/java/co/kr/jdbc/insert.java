@@ -15,7 +15,7 @@ public class insert {
 		 conn=DriverManager.getConnection(url, id, pwd);///진짜 php 보다훨씬 짜증난다 ㅋㅋ
 		System.out.println(conn+"접속완료");
 		stmt=conn.createStatement();
-		String sql="INSERT INTO member(id,pwd,name,position)VAlUES('ki93dsdds','1234ddsdsd','junddss','midsddsdd')";
+		String sql="INSERT INTO member(id,pwd,name,position)VAlUES('ki9dss3dsdds','1234ddsdsdsd','junddsdss','midsdsddsdd')";
 		int a=stmt.executeUpdate(sql);
 		if(a==1)
 		{

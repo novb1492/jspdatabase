@@ -26,9 +26,9 @@
 <br>
 성별
 <br>
-<input type="radio" name="gender" value="남">
-<input type="text" name="gender" value="여">
-<input type="submit">
+남<input type="radio" name="gender" value="남">
+여<input type="radio" name="gender" value="여">
+<input type="submit" value="회원가입">
 </form>
 
 </body>
