@@ -15,20 +15,20 @@ String pwd=request.getParameter("pwd");
 	String sql="select * from users where id='"+id+"'";
 try{
 	Class.forName("com.mysql.jdbc.Driver");
-	out.print(sql);
 	conn=DriverManager.getConnection(url,dbid,dbpwd);
 	System.out.println(conn+"접속완료");
 	stmt =conn.createStatement();
 	rs=stmt.executeQuery(sql);////////select에서만20210427이유는 여러정보를 가져오기 때문
-	out.print(sql);
-	if(rs.next())
+	if(rs.next())//////if문에서도 잘먹힌다 20210501
 	{
-		String iid=rs.getString("id");
-		String ppwd=rs.getString("pwd");
-		if(iid.equals(id)&&ppwd.equals(pwd))
+		if(rs.getString("id").equals(id)&&rs.getString("pwd").equals(pwd))
 		{
 			session.setAttribute("userid",id);
 			session.setAttribute("username",rs.getString("name"));
+			session.setAttribute("userphone1",rs.getString("phone1"));
+			session.setAttribute("userphone2",rs.getString("phone2"));
+			session.setAttribute("userphone3",rs.getString("phone3"));
+			session.setAttribute("gender",rs.getString("gender"));
 			response.sendRedirect("welcome.jsp");
 		}
 		else
