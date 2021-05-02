@@ -15,16 +15,23 @@
 	String dbpwd="6937544";
 	String url="jdbc:mysql://localhost:3306/study_db";
 	Connection conn=null;
-	Statement stmt=null;
-
-	String sql="update users set name='"+name+"',phone1='"+phone1+"',phone2='"+phone2+"',phone3='"+phone3+"',gender='"+gender+"' where id='"+id+"'";
+	PreparedStatement pstmt=null;
+String sql="update users set name=?,phone1=?,phone2=?,phone3=?,gender=? where id=?";
+	/*String sql="update users set name='"+name+"',phone1='"+phone1+"',phone2='"+phone2+"',phone3='"+phone3+"',gender='"+gender+"' where id='"+id+"'";*/
+	
 try{
 	Class.forName("com.mysql.jdbc.Driver");
 	conn=DriverManager.getConnection(url,dbid,dbpwd);
 	System.out.println(conn+"접속완료");
-	stmt =conn.createStatement();
+	pstmt =conn.prepareStatement(sql);
+	pstmt.setString(1, name);
+	pstmt.setString(2, phone1);
+	pstmt.setString(3, phone2);
+	pstmt.setString(4, phone3);
+	pstmt.setString(5, gender);
+	pstmt.setString(6, id);
 	//out.print(sql);
-	int rn=stmt.executeUpdate(sql);
+	int rn=pstmt.executeUpdate();
 	if(rn==1)
 	{
 		session.setAttribute("userid",id);
@@ -49,7 +56,7 @@ finally
 {
 try{
 	conn.close();
-	stmt.close();
+	pstmt.close();
 }
 catch(Exception e2)
 {

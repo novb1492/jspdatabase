@@ -6,7 +6,7 @@
     String phone1=(String)session.getAttribute("userphone1");
     String phone2=(String)session.getAttribute("userphone2");
     String phone3=(String)session.getAttribute("userphone3");
-    String gender=(String)session.getAttribute("gender");
+    String gender=(String)session.getAttribute("usergender");
     %>
 <!DOCTYPE html>
 <html>
