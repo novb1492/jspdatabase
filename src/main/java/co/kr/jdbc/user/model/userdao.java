@@ -3,25 +3,29 @@ package co.kr.jdbc.user.model;
 import java.sql.*;
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 public class userdao {
 	
-	private String dbid="root";
-	private String dbpwd="6937544";
-	private String url="jdbc:mysql://localhost:3306/study_db";
+	private DataSource ds;
 	
+	private Connection conn= null;
+	private PreparedStatement pstmt=null;
 	private userdao()
 	{
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			
+			Context ct = new InitialContext();///context.xml읽기 위한
+			ds=(DataSource)ct.lookup("java:comp/env/jdbc/mysql");
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-
 	private static userdao dao=new userdao();
+	
 	public static userdao getinstance()
 	{
 		if(dao!=null)
@@ -33,11 +37,11 @@ public class userdao {
 	public int join(uservo users)
 	{
 		String sql= "insert into users(name,id,pwd,phone1,phone2,phone3,gender)values(?,?,?,?,?,?,?)";
-		Connection conn= null;
-		PreparedStatement pstmt=null;
+		conn= null;
+		 pstmt=null;
 		int rn=0;
 		try {
-			conn =DriverManager.getConnection(url,dbid,dbpwd);
+			conn =ds.getConnection();
 			System.out.println(conn+"접속완료");
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, users.getName());
@@ -69,11 +73,11 @@ public class userdao {
 	{
 		ArrayList<uservo>array=new ArrayList<uservo>();
 		String sql= "select *from users where id=?";
-		Connection conn= null;
-		PreparedStatement pstmt=null;
+		 conn= null;
+		 pstmt=null;
 		ResultSet rs=null;
 		try {
-			conn =DriverManager.getConnection(url,dbid,dbpwd);
+			conn =ds.getConnection();
 			System.out.println(conn+"접속완료");
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, id);

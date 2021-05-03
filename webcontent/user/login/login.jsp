@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
 <body>
 <form action="loinprocesse.jsp" method="post">
 아이디:<input type="text" name="id">
