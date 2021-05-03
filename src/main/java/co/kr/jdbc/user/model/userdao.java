@@ -20,8 +20,8 @@ public class userdao {
 			e.printStackTrace();
 		}
 	}
+
 	private static userdao dao=new userdao();
-	
 	public static userdao getinstance()
 	{
 		if(dao!=null)
@@ -65,9 +65,9 @@ public class userdao {
 		}
 		return rn;
 	}
-	public ArrayList<String>select(String id,String pwd)
+	public ArrayList<uservo>select(String id,String pwd)
 	{
-		ArrayList<String>array=new ArrayList<String>();
+		ArrayList<uservo>array=new ArrayList<uservo>();
 		String sql= "select *from users where id=?";
 		Connection conn= null;
 		PreparedStatement pstmt=null;
@@ -83,13 +83,9 @@ public class userdao {
 			{
 				if(rs.getString("pwd").equals(pwd))
 				{	
-				array.add(rs.getString("name"));
-				array.add(id);
-				array.add(pwd);
-				array.add(rs.getString("phone1"));
-				array.add(rs.getString("phone2"));
-				array.add(rs.getString("phone3"));
-				array.add(rs.getString("gender"));
+				uservo users =new uservo(rs.getString("name"),id,pwd,rs.getString("phone1"),rs.getString("phone2"),rs.getString("phone3"),rs.getString("gender"));
+				array.add(users);
+				System.out.println(array);
 				}
 				else
 				{

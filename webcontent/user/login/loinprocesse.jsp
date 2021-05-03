@@ -1,6 +1,7 @@
 
+
 <%@page import="java.util.ArrayList"%>
-<%@page import="co.kr.jdbc.user.model.userdao"%>
+<%@page import="co.kr.jdbc.user.model.*"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -14,19 +15,17 @@
 
 userdao dao = userdao.getinstance();
  
-ArrayList<String>array= dao.select(users.getId(),users.getPwd());
+ArrayList<uservo>array= dao.select(users.getId(),users.getPwd());
 
-
-
-if(array.get(0)!=null)
+String name=null;
+for(uservo user : array)
 {
-	session.setAttribute("sname",array.get(0));
-	
-	response.sendRedirect("welecome.jsp");
+	name=user.getName();
 }
-else
-{
-	response.sendRedirect("logine.jsp");
-}
+session.setAttribute("username",name);
+out.print(name);
+response.sendRedirect("welcome.jsp");
+
+
 
 %>
