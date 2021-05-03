@@ -30,14 +30,25 @@ public class userdao {
 		}
 		return dao;
 	}
-	public static void join()
+	public int join(uservo users)
 	{
 		String sql= "insert into users(name,id,pwd,phone1,phone2,phone3,gender)values(?,?,?,?,?,?,?)";
 		Connection conn= null;
 		PreparedStatement pstmt=null;
+		int rn=0;
 		try {
 			conn =DriverManager.getConnection(url,dbid,dbpwd);
-			p
+			System.out.println(conn+"立加肯丰");
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, users.getName());
+			pstmt.setString(2, users.getId());
+			pstmt.setString(3, users.getPwd());
+			pstmt.setString(4, users.getPhone1());
+			pstmt.setString(5, users.getPhone2());
+			pstmt.setString(6, users.getPhone3());
+			pstmt.setString(7, users.getGender());
+			System.out.println(pstmt);
+			rn=	pstmt.executeUpdate();
 		}
 		catch(Exception e)
 		{
@@ -52,6 +63,54 @@ public class userdao {
 				e.printStackTrace();
 			}
 		}
+		return rn;
 	}
-			
+	public ArrayList<String>select(String id,String pwd)
+	{
+		ArrayList<String>array=new ArrayList<String>();
+		String sql= "select *from users where id=?";
+		Connection conn= null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			conn =DriverManager.getConnection(url,dbid,dbpwd);
+			System.out.println(conn+"立加肯丰");
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			System.out.println(pstmt);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				if(rs.getString("pwd").equals(pwd))
+				{	
+				array.add(rs.getString("name"));
+				array.add(id);
+				array.add(pwd);
+				array.add(rs.getString("phone1"));
+				array.add(rs.getString("phone2"));
+				array.add(rs.getString("phone3"));
+				array.add(rs.getString("gender"));
+				}
+				else
+				{
+					array.add(null);
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				conn.close();
+				pstmt.close();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return array;
+	}
+
 }//database傈淬 贸府 20210502

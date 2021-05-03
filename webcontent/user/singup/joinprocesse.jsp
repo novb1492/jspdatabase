@@ -9,5 +9,15 @@
 
 <%
 	userdao dao= userdao.getinstance();
+	int rn=dao.join(users);
 	
+	if(rn==1)
+	{
+		session.setAttribute("userid",users.getName());
+		response.sendRedirect("joinsuccess.jsp");
+	}
+	else
+	{
+		out.println("실패");
+	}
 %>
